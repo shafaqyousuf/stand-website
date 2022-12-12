@@ -1,70 +1,44 @@
-var min = 0;
-var sec = 0; 
-var milisec = 0;
-var displaymin = document.getElementById("displaymin");
-var displaysec = document.getElementById("displaysec");
-var displaymilisec = document.getElementById("displaymilisec");
+var main = document.getElementById("main");
+var inp = document.getElementById("inp");
 
-var interval;
+function add() {
+    if (inp.value == "") {
+        alert("empty");
+    } else {
+        // making li by dom
+        var li = document.createElement("li");
+        var liText = document.createTextNode(inp.value);
+        li.appendChild(liText);
 
-function timer(){
-    milisec++;
-    if(milisec == 10){
-        milisec = 0;
-        sec++;
-        if(sec == 60){
-            sec = 0;
-            min++;
-        }
+        // making edit button by dom
+        var editBtn = document.createElement("button");
+        var editBtntext = document.createTextNode("edit");
+        editBtn.appendChild(editBtntext);
+        editBtn.setAttribute("onclick", "edit(this)")
+        li.appendChild(editBtn);
+
+        // making delete button by dom
+        var delBtn = document.createElement("button");
+        var delBtntext = document.createTextNode("del");
+        delBtn.appendChild(delBtntext);
+        delBtn.setAttribute("onclick", "del(this)")
+        li.appendChild(delBtn);
+
+        main.appendChild(li);
+
+        inp.value = "";
     }
-    displaymilisec.innerHTML = milisec;
-    displaysec.innerHTML= sec;
-    displaymin.innerHTML= min;
 }
-
-function start(){
-    interval = setInterval(function(){
-        timer()
-    },100)
+function edit(element){
+    var newValue = prompt("enter new value", element.parentNode.firstChild.nodeValue);
+element.parentNode.firstChild.nodeValue = newValue;
 }
-function pause(){
-    clearInterval(interval)
+function del(element){
+element.parentNode.remove();
 }
-function reset(){
-    pause();
-    milisec = 0;
-    sec = 0;
-    min = 0;
-    displaymilisec.innerHTML = milisec;
-    displaysec.innerHTML= sec;
-    displaymin.innerHTML= min;
+function delAll(){
+    main.innerHTML = "";
 }
-// timer
-
-var minutes = 10;
-var seconds = 60; 
-var displaymin = document.getElementById("timermin");
-var displaysec = document.getElementById("timersec");
-setInterval(function(){
-    timer()
-},1000);
-
-function timer(){
-seconds--
-    if(seconds < 0 ){
-        seconds = 60;
-        minutes--;
-    }
-    displaymin.innerHTML = minutes;
-    displaysec.innerHTML= seconds;
-}
-
-
-
-
-
-
-
 
 
 
